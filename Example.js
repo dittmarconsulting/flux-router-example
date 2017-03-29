@@ -56,20 +56,20 @@ const purgeAll = (object, target) => {
 const reducerCreate = params => {
     const defaultReducer = new Reducer(params);
     return (state, action) => {
-        // // make sure state and scene exist
-        // if(state && action.scene) {
-        //     // once we have gone to scene "register2" delete the modal
-        //     if(action.scene.sceneKey === 'register2') {
-        //         // purge modal scene from the child arrays
-        //         purgeAll(state, {
-        //             key: 'error_1_error',
-        //             sceneKey: 'error'
-        //         })
-        //     }
-        // }
-        return defaultReducer(state, action);
-    };
-};
+        // make sure state and scene exist
+        if(state && action.scene) {
+            // once we have gone to scene "register2" delete the modal
+            if(action.scene.sceneKey === 'register2') {
+                // purge modal scene from the child arrays
+                purgeAll(state, {
+                    key: 'error_1_error',
+                    sceneKey: 'error'
+                })
+            }
+        }
+        return defaultReducer(state, action)
+    }
+}
 
 // define this based on the styles/dimensions you use
 const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) => {
@@ -116,8 +116,8 @@ class Example extends Component {
 
     componentDidMount() {
         // open the modal dialog once so the componts mounts but it won't show
-        Actions.error()
-        console.log('Error modal component mounted!')
+        //Actions.error()
+        //console.log('Error modal component mounted!')
     }
 
     render() {
