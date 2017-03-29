@@ -25,13 +25,12 @@ export default class extends React.Component {
         super (props);
 
         this.state = {
-            visible: true,
+            visible: false,
             offset: new Animated.Value(-deviceHeight)
         };
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps', nextProps)
         if (nextProps.visible) {
             this.setState({visible: nextProps.visible});
         }
@@ -48,7 +47,10 @@ export default class extends React.Component {
         Animated.timing(this.state.offset, {
             duration: 150,
             toValue: -deviceHeight
-        }).start(Actions[sceneKey])
+        }).start(() => {
+            this.setState({visible: false});
+            Actions[sceneKey]
+        })
     }
 
     closeModal() {
@@ -59,8 +61,11 @@ export default class extends React.Component {
     }
 
     render(){
-        console.log('ERROR', this.state)
-        return (this.state.visible) ? (
+
+        const {visible} = this.state
+        console.log('ERROR', visible)
+
+        return (visible) ? (
             <Animated.View style={[styles.container, {backgroundColor:"rgba(52,52,52,0.5)"},
                                   {transform: [{translateY: this.state.offset}]}]}>
                 <View style={{  width:250,
