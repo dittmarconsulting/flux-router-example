@@ -25,7 +25,7 @@ export default class extends React.Component {
         super (props);
 
         this.state = {
-            visible: false,
+            visible: true,
             offset: new Animated.Value(-deviceHeight)
         };
     }
@@ -48,8 +48,8 @@ export default class extends React.Component {
             duration: 150,
             toValue: -deviceHeight
         }).start(() => {
-            this.setState({visible: false});
-            Actions[sceneKey]
+            //this.setState({visible: false});
+            Actions[sceneKey]({})
         })
     }
 
