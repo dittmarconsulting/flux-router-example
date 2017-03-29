@@ -41,17 +41,29 @@ const styles = StyleSheet.create({
     },
 });
 
+const purgeAll = (object, target) => {
+    if (object.children) {
+        const keys = Object.keys(target)
+        // overide the children array with the new purged array
+        object.children = object.children.filter(obj =>
+            // ignore the matching object
+            !keys.every(key => target[key] === obj[key]) && purgeAll(obj, target)
+        )
+    }
+    return object
+}
+
 const reducerCreate = params => {
     const defaultReducer = new Reducer(params);
     return (state, action) => {
-        // make sure state and scene exist
+        // // make sure state and scene exist
         // if(state && action.scene) {
-        //     // only track scene "register2"
+        //     // once we have gone to scene "register2" delete the modal
         //     if(action.scene.sceneKey === 'register2') {
-        //         // filter all modal children & assign the new filtered array to the nav stack
-        //         state.children[0].children = state.children[0].children.filter(child => {
-        //             // look for key: 'error_1_error' and sceneKey: 'error'
-        //             return !child.key.includes("error") && child.sceneKey !== 'error'
+        //         // purge modal scene from the child arrays
+        //         purgeAll(state, {
+        //             key: 'error_1_error',
+        //             sceneKey: 'error'
         //         })
         //     }
         // }
@@ -100,6 +112,14 @@ const SwitcherPage = (props) => (
 );
 
 class Example extends Component {
+
+
+    componentDidMount() {
+        // open the modal dialog once so the componts mounts but it won't show
+        Actions.error()
+        console.log('Error modal component mounted!')
+    }
+
     render() {
         return (
             <Router createReducer={reducerCreate} getSceneStyle={getSceneStyle}>
