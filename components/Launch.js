@@ -22,10 +22,8 @@ class Launch extends React.Component {
     }
 
     _showModal() {
-        console.log('should show modal')
-        Actions.error(message: "Error 123") // this works
-        //Actions.refresh({key: "error", visible: true, uniqId: new Date().getTime()}); // does nothing
-        //Actions.error(type: "refresh", visible: true, uniqId: new Date().getTime()}); // get error
+        console.info('should show modal')
+        Actions.refresh({key: "error", visible: true, uniqId: new Date().getTime()});
     }
 
     render(){
