@@ -23,7 +23,8 @@ class Launch extends React.Component {
 
     _showModal() {
         console.info('should show modal')
-        Actions.refresh({key: "error", visible: true, uniqId: new Date().getTime()});
+        //Actions.refresh({key: "error", visible: true, uniqId: new Date().getTime()});
+        Actions.error('Error text')
     }
 
     render(){
